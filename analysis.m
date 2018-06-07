@@ -14,16 +14,33 @@
 %0-0
 %000
 
-prec = ncread("E:/ATM115 Data/SST300k-selected/sam2d.nc","Prec");
-x = ncread("E:/ATM115 Data/SST300k-selected/sam2d.nc","x");
-t = ncread("E:/ATM115 Data/SST300k-selected/sam2d.nc","t");
-
-room_x = 100
-room_y = 100
-
 BW = imregionalmax(prec(room_x:end-room_x, room_time:end-room_time),4);
 
 %this finds the row and column indicies where BW is true, that is greater than either 4
 %or eight of it's surrounding points
 [row, col] = find(BW>0);
 ind_cent = [row, col];
+
+%to composite the precipitation events
+aa = 0;
+for i = 1: size(ind_cent,1)
+	aa = aa + prec(ind_cent(i,1):ind_cent(i,1)+2*room_x-1, ind_cent(i,2):ind_cent(i,2)+2*room_time-1);
+end
+
+%it also might be useful to smooth the events in x and time
+
+for i = 1:size(aa,1)            %smooth in X
+    aa(i,:) = smooth(aa(i,:));
+end
+
+for i = 1:size(aa,2)            %smooth in time 
+    aa(:,i) = smooth(aa(:,i));
+end
+
+%makes an average
+% aa = aa/size(ind_cent,1);
+
+%makes an anomaly
+% for i = 1:size(aa,1)
+% 	aa(i,:) = aa(i,:) - mean(aa(i,:));
+% end
