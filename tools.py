@@ -15,3 +15,11 @@ def calc_ws(pressure, es):
 def calc_rh(w, ws):
     rh = w/ws
     return rh
+
+
+def col_av(variable, tmax, zmax, xmax):
+    col_av_var = np.zeros((tmax, xmax))
+    for t in range(0, tmax):
+        for x in range(0, xmax):
+            col_av_var[t,x] = np.average(variable[t,:,x])
+    return col_av_var
