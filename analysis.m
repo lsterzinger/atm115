@@ -69,6 +69,8 @@ netcdf.putVar(output, prec_tot_out, prec_tot);
 netcdf.putVar(output, prec_av_out, prec_av);
 
 netcdf.close(output)
+
+
 %makes an average
 %makes an anomaly
 % for i = 1:size(prec_tot,1)
