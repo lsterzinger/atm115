@@ -3,16 +3,14 @@ import numpy as np
 from tools import calc_es, calc_rh, calc_ws, col_av
 import matplotlib.pyplot as plt
 
-#filepath = 'E:/ATM115 Data/SST300k-selected/'
-filepath = '/home/lsterzinger/Documents/ATM115-Data/SST300k-selected/'
-data3d = '/home/lsterzinger/Documents/ATM115-Data/SST300k-selected/sam3d.nc'
-data2d = '/home/lsterzinger/Documents/ATM115-Data/SST300k-selected/sam2d.nc'
-dataderived = '/home/lsterzinger/Documents/ATM115-Data/derived300k_new.nc'
-outputfilename = '300K_vars.nc'
+#filepath = 'E:/ATM115 Data/SST310k-selected/'
+filepath = '/home/lsterzinger/Documents/ATM115-Data/SST310k-selected/'
+data3d = '/home/lsterzinger/Documents/ATM115-Data/SST310k-selected/sam3d.nc'
+data2d = '/home/lsterzinger/Documents/ATM115-Data/SST310k-selected/sam2d.nc'
+outputfilename = '310K_vars.nc'
 
 sam3d = ncfile(data3d)
 sam2d = ncfile(data2d)
-derived = ncfile(dataderived)
 
 x = sam3d.variables['x'][:]
 z = sam3d.variables['z'][:]
