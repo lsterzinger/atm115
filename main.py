@@ -1,8 +1,4 @@
-from netCDF4 import Dataset as ncfile
-import numpy as np
-from tools import calc_es, calc_rh, calc_ws, col_av, run_param
-import matplotlib.pyplot as plt
-
+comp
 #filepath = 'E:/ATM115 Data/SST310k-selected/'
 filepath = '/home/lsterzinger/Documents/ATM115-Data/SST310k-selected/'
 data3d = '/home/lsterzinger/Documents/ATM115-Data/SST310k-selected/sam3d.nc'
