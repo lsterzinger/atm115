@@ -1,13 +1,13 @@
 from netCDF4 import Dataset as ncfile
 import numpy as np
-from tools import calc_es, calc_rh, calc_ws, col_av
+from tools import calc_es, calc_rh, calc_ws, col_av, run_param
 import matplotlib.pyplot as plt
 
-#filepath = 'E:/ATM115 Data/SST300k-selected/'
-filepath = '/home/lsterzinger/Documents/ATM115-Data/SST300k-selected/'
-data3d = '/home/lsterzinger/Documents/ATM115-Data/SST300k-selected/sam3d.nc'
-data2d = '/home/lsterzinger/Documents/ATM115-Data/SST300k-selected/sam2d.nc'
-outputfilename = '300K_vars.nc'
+#filepath = 'E:/ATM115 Data/SST310k-selected/'
+filepath = '/home/lsterzinger/Documents/ATM115-Data/SST310k-selected/'
+data3d = '/home/lsterzinger/Documents/ATM115-Data/SST310k-selected/sam3d.nc'
+data2d = '/home/lsterzinger/Documents/ATM115-Data/SST310k-selected/sam2d.nc'
+outputfilename = '310K_vars.nc'
 
 sam3d = ncfile(data3d)
 sam2d = ncfile(data2d)
@@ -40,6 +40,7 @@ ws = calc_ws(pressure, es)
 rh = calc_rh(qv,ws)
 
 col_av_rh = col_av(rh, 3600, 38, 1024)
+prec_param = run_param(col_av_rh)
 
 # Write everything to file
 output = ncfile(outputfilename, 'w', format='NETCDF4')
@@ -64,11 +65,12 @@ pressure_out = output.createVariable('pressure','f4',('time','z','x'))
 es_out = output.createVariable('es','f4',('time','z','x'))
 rh_out = output.createVariable('rh','f4',('time','z','x'))
 rh_col_out = output.createVariable('rh_col_av', 'f4', ('time','x'))
+prec_param_out = output.createVariable('prec_param', 'f4', ('time','x'))
 pressure_out.units = 'mb'
 es_out.units = 'mb'
 pressure_out[:] = pressure
 es_out[:] = es
 rh_out[:] = rh
 rh_col_out[:] = col_av_rh
-
+prec_param_out[:] = prec_param
 output.close()
