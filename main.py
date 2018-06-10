@@ -3,11 +3,11 @@ import numpy as np
 from tools import calc_es, calc_rh, calc_ws, col_av
 import matplotlib.pyplot as plt
 
-#filepath = 'E:/ATM115 Data/SST310k-selected/'
-filepath = '/home/lsterzinger/Documents/ATM115-Data/SST310k-selected/'
-data3d = '/home/lsterzinger/Documents/ATM115-Data/SST310k-selected/sam3d.nc'
-data2d = '/home/lsterzinger/Documents/ATM115-Data/SST310k-selected/sam2d.nc'
-outputfilename = '310K_vars.nc'
+#filepath = 'E:/ATM115 Data/SST300k-selected/'
+filepath = '/home/lsterzinger/Documents/ATM115-Data/SST300k-selected/'
+data3d = '/home/lsterzinger/Documents/ATM115-Data/SST300k-selected/sam3d.nc'
+data2d = '/home/lsterzinger/Documents/ATM115-Data/SST300k-selected/sam2d.nc'
+outputfilename = '300K_vars.nc'
 
 sam3d = ncfile(data3d)
 sam2d = ncfile(data2d)
@@ -37,9 +37,9 @@ temp = temp - 273.15
 #Calculate e_s
 es = calc_es(temp)
 ws = calc_ws(pressure, es)
-rh =calc_rh(qv,ws)
+rh = calc_rh(qv,ws)
 
-col_av_rh = col_av(rh, 3600, 71, 1024)
+col_av_rh = col_av(rh, 3600, 38, 1024)
 
 # Write everything to file
 output = ncfile(outputfilename, 'w', format='NETCDF4')

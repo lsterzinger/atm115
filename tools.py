@@ -21,5 +21,10 @@ def col_av(variable, tmax, zmax, xmax):
     col_av_var = np.zeros((tmax, xmax))
     for t in range(0, tmax):
         for x in range(0, xmax):
-            col_av_var[t,x] = np.average(variable[t,:,x])
+            col_av_var[t,x] = np.average(variable[t,0:zmax,x])
     return col_av_var
+
+
+def run_param(rh):
+    p = np.exp(15.6*(rh-0.603))
+    return p
