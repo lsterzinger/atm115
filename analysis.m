@@ -16,8 +16,8 @@
 room_x = 100;
 room_time = 100;
 
-prec = ncread('~/Documents/ATM115-Data/SST310k-selected/sam2d.nc','Prec');
-rh  = ncread('~/Desktop/atm115/310K_vars.nc','rh_col_av');
+prec = ncread('~/Documents/ATM115-Data/SST300k-selected/sam2d.nc','Prec');
+rh  = ncread('~/Desktop/atm115/300K_vars.nc','rh_col_av');
 BW = imregionalmax(prec(room_x:end-room_x, room_time:end-room_time),4);
 
 %this finds the row and column indicies where BW is true, that is greater than either 4
@@ -51,7 +51,7 @@ prec_av = prec_tot/size(ind_cent,1);
 rh_av = rh_tot/size(ind_cent,1);
 
 
-output = netcdf.create('310K_composite.nc','NOCLOBBER');
+output = netcdf.create('300K_composite.nc','NOCLOBBER');
 x = netcdf.defDim(output, 'x', 200);
 time = netcdf.defDim(output, 'time', 200);
 prec_tot_out = netcdf.defVar(output, 'prec_tot', 'NC_DOUBLE', [time x]);
@@ -65,8 +65,8 @@ netcdf.putVar(output, prec_tot_out, prec_tot);
 netcdf.putVar(output, prec_av_out, prec_av);
 
 
-netcdf.putVar(output, prec_tot_out, prec_tot);
-netcdf.putVar(output, prec_av_out, prec_av);
+netcdf.putVar(output, rh_tot_out, rh_tot);
+netcdf.putVar(output, rh_av_out, rh_av);
 
 netcdf.close(output)
 
