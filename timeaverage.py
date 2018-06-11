@@ -7,17 +7,15 @@ import numpy as np
 from tools import calc_es, calc_rh, calc_ws, run_param, col_av
 import matplotlib.pyplot as plt
 
-#filepath = 'E:/ATM115 Data/SST310k-selected/'
-filepath = './SST310k-selected/'
-data3d = './SST310k-selected/sam3d.nc'
-data2d = './SST310k-selected/sam2d.nc'
-outputfilename = '310K_vars.nc'
+#filepath = 'E:/ATM115 Data/SST300k-selected/'
+filepath = './SST300k-selected/'
+data3d = './SST300k-selected/sam3d.nc'
+data2d = './SST300k-selected/sam2d.nc'
+outputfilename = '300K_vars.nc'
 
 sam3d = ncfile(data3d)
 sam2d = ncfile(data2d)
-varfile = ncfile('./310K_vars.nc','r')
-
-output = ncfile(outputfilename,'r+')
+varfile = ncfile('./300K_vars.nc','r+')
 
 prec = sam2d['Prec'][:]
 rh = varfile['rh'][:]
@@ -56,17 +54,17 @@ for month in range(0,5):
     print("Averaging month: " + str(month))
 
 # Write to disk
-dimd = output.createDimension('day', 150)
-dimm = output.createDimension('month',5)
+dimd = varfile.createDimension('day', 150)
+dimm = varfile.createDimension('month',5)
 
-prec_daily_out = output.createVariable('prec_daily', 'f4', ('day', 'x'))
-rh_daily_out = output.createVariable('rh_daily', 'f4', ('day', 'z','x'))
-prec_monthly_out = output.createVariable('prec_monthly', 'f4', ('month','x'))
-rh_monthly_out = output.createVariable('prec_monthly', 'f4', ('month','z','x'))
+prec_daily_out = varfile.createVariable('prec_daily', 'f4', ('day', 'x'))
+rh_daily_out = varfile.createVariable('rh_daily', 'f4', ('day', 'z','x'))
+prec_monthly_out = varfile.createVariable('prec_monthly', 'f4', ('month','x'))
+rh_monthly_out = varfile.createVariable('prec_monthly', 'f4', ('month','z','x'))
 
 prec_daily_out[:] = prec_daily
 rh_daily_out[:] = rh_daily
 prec_monthly_out[:] = prec_monthly
 rh_monthly_out[:] = rh_monthly
 
-output.close()
+varfile.close()
