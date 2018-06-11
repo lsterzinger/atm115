@@ -1,18 +1,19 @@
 from netCDF4 import Dataset as ncfile
 import numpy as np
-from tools import calc_es, calc_rh, calc_ws, run_param
+from tools import calc_es, calc_rh, calc_ws, run_param, col_av
 import matplotlib.pyplot as plt
 
 
 #filepath = 'E:/ATM115 Data/SST310k-selected/'
-filepath = '/home/lsterzinger/Documents/ATM115-Data/SST310k-selected/'
-data3d = '/home/lsterzinger/Documents/ATM115-Data/SST310k-selected/sam3d.nc'
-data2d = '/home/lsterzinger/Documents/ATM115-Data/SST310k-selected/sam2d.nc'
+filepath = './SST310k-selected/'
+data3d = './SST310k-selected/sam3d.nc'
+data2d = './SST310k-selected/sam2d.nc'
 outputfilename = '310K_vars.nc'
 
 sam3d = ncfile(data3d)
 sam2d = ncfile(data2d)
 
+print("Importing Variables")
 x = sam3d.variables['x'][:]
 z = sam3d.variables['z'][:]
 t = sam3d.variables['time'][:]
@@ -22,6 +23,7 @@ temp = sam3d['TABS'][:]
 pressure_ref = sam3d['p'][:]
 pres_pert = sam3d['PP'][:]
 
+print("Calculating Pressures")
 pressure = np.zeros((3600,71,1024))
 # Pressure perturbarion + base state
 for i in range(0,1024):
@@ -36,6 +38,7 @@ pres_pert = None
 temp = temp - 273.15
 
 #Calculate e_s
+print("Calculating humidity")
 es = calc_es(temp)
 ws = calc_ws(pressure, es)
 rh = calc_rh(qv,ws)
@@ -44,6 +47,7 @@ col_av_rh = col_av(rh, 3600, 38, 1024)
 prec_param = run_param(col_av_rh)
 
 # Write everything to file
+print("Writing everything to file")
 output = ncfile(outputfilename, 'w', format='NETCDF4')
 
 #create dimensions
