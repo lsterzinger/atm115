@@ -60,7 +60,7 @@ dimm = varfile.createDimension('month',5)
 prec_daily_out = varfile.createVariable('prec_daily', 'f4', ('day', 'x'))
 rh_daily_out = varfile.createVariable('rh_daily', 'f4', ('day', 'z','x'))
 prec_monthly_out = varfile.createVariable('prec_monthly', 'f4', ('month','x'))
-rh_monthly_out = varfile.createVariable('prec_monthly', 'f4', ('month','z','x'))
+rh_monthly_out = varfile.createVariable('rh_monthly', 'f4', ('month','z','x'))
 
 prec_daily_out[:] = prec_daily
 rh_daily_out[:] = rh_daily
